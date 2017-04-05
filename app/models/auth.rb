@@ -7,11 +7,13 @@ class Auth
   end
 
   def self.issue(hash)
-    JWT.encode(hash, secret, ALG)
+    a = JWT.encode(hash, secret, ALG)
+    puts a
+    a
   end
 
   def self.decode(jwt)
-    JWT.decode(jwt, secret, true, ALG)
+    JWT.decode(jwt, secret, true, {algorithm: ALG})
   end
 
 end

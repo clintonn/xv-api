@@ -1,7 +1,14 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
   def create
-    binding.pry
+    @user = User.new(user_params)
+    if @user.save
+      jwt = Auth.issue({user_id: @user.id})
+      render json: {
+        jwt: jwt,
+        user: {id: @user.id, firstName: @user.first_name, lastName: @user.last_name, email: @user.email, username: @user.username, resumes: @user.resumes}
+      }
+    end
   end
 
   private
