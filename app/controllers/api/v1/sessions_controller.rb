@@ -19,7 +19,7 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 
   def auth
     begin
-      @id = Auth.decode(params[:jwt])[0]["id"]
+      @id = Auth.decode(params[:jwt])[0]["user_id"]
       render json: User.find(@id)
     rescue
       render status: 401
