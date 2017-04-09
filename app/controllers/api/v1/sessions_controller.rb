@@ -13,6 +13,15 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
         }
       ) : (render status: 500)
     else
+      render status: 204
+    end
+  end
+
+  def auth
+    begin
+      @id = Auth.decode(params[:jwt])[0]["id"]
+      render json: User.find(@id)
+    rescue
       render status: 401
     end
   end
