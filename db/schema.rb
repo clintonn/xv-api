@@ -10,15 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403180256) do
+ActiveRecord::Schema.define(version: 20170411194703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "educations", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "institution"
+    t.string   "degree"
+    t.string   "major"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "resume_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "image_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+  end
+
+  create_table "projects_resumes", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "resume_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "resumes", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "hash_url"
-    t.string   "custom_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_resumes_on_user_id", using: :btree
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "skills_resumes", force: :cascade do |t|
+    t.integer  "resume_id"
+    t.integer  "skill_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,13 +73,7 @@ ActiveRecord::Schema.define(version: 20170403180256) do
     t.datetime "updated_at",                      null: false
     t.boolean  "email_confirmed", default: false
     t.string   "username"
-  end
-
-  create_table "work_points", force: :cascade do |t|
-    t.integer  "job_id"
-    t.string   "desc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
   create_table "works", force: :cascade do |t|
@@ -48,6 +83,9 @@ ActiveRecord::Schema.define(version: 20170403180256) do
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "city"
+    t.string   "state"
+    t.text     "desc"
   end
 
 end

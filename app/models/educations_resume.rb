@@ -1,0 +1,2 @@
+class EducationsResume < ApplicationRecord
+end

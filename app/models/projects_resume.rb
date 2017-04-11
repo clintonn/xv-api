@@ -1,0 +1,2 @@
+class ProjectsResume < ApplicationRecord
+end
