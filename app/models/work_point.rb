@@ -1,2 +1,0 @@
-class WorkPoint < ApplicationRecord
-end
